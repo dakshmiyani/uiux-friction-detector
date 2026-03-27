@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="icon">⚡</span>
+        <h1>UI Friction Detector</h1>
+      </div>
+      <div class="header-actions">
+        <button id="settings-btn" class="icon-btn" title="Settings">⚙️</button>
+        <button id="scan-btn" class="primary-btn">Scan This Page</button>
+      </div>
+    </header>
+
+    <div id="current-url" class="current-url">Loading page info...</div>
+
+    <!-- Settings Panel (collapsible) -->
+    <div id="settings-panel" class="settings-panel hidden">
+      <label class="settings-label">🔑 Groq API Key</label>
+      <p class="settings-hint">Powers the AI Advisor. Get a free key at <strong>console.groq.com</strong></p>
+      <div class="api-key-row">
+        <input type="password" id="groq-api-key" placeholder="gsk_..." autocomplete="off">
+        <button id="save-key-btn" class="save-btn">Save</button>
+      </div>
+      <div id="key-status" class="key-status"></div>
+    </div>
+
+    <main id="app-view">
+      <section class="score-section">
+        <div class="score-ring">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" class="bg-ring"></circle>
+            <circle cx="50" cy="50" r="45" class="score-progress" id="score-circle"></circle>
+          </svg>
+          <div class="score-value">
+            <span id="overall-score">--</span>
+            <small>UX SCORE</small>
+          </div>
+        </div>
+
+        <div class="category-scores">
+          <div class="cat">
+            <label>Usability</label>
+            <div class="progress-bar"><div id="score-usability" class="progress"></div></div>
+          </div>
+          <div class="cat">
+            <label>Accessibility</label>
+            <div class="progress-bar"><div id="score-accessibility" class="progress"></div></div>
+          </div>
+          <div class="cat">
+            <label>Performance</label>
+            <div class="progress-bar"><div id="score-performance" class="progress"></div></div>
+          </div>
+          <div class="cat">
+            <label>Design</label>
+            <div class="progress-bar"><div id="score-design" class="progress"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="controls">
+        <div class="toggle-group">
+          <span>😈 Roast Mode</span>
+          <label class="switch">
+            <input type="checkbox" id="roast-toggle">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="btn-group">
+          <button id="ai-advisor-btn" class="outline-btn">🤖 AI Advisor</button>
+          <button id="export-btn" class="outline-btn">📤 Export</button>
+        </div>
+      </section>
+
+      <section class="issues-section">
+        <h3>Detected Issues <span id="issue-count" class="badge">0</span></h3>
+        <div id="issues-list-container" style="position: relative;">
+          <div id="issues-list" class="issues-list">
+            <div class="empty-state">No issues detected yet. Run a scan!</div>
+          </div>
+          <div id="stale-overlay" class="stale-overlay hidden">
+            <h4>🔄 Tab Switched</h4>
+            <p>The results below are for a different website.</p>
+            <button id="rescan-btn" class="primary-btn">Scan Current Page</button>
+          </div>
+        </div>
+      </section>
+      
+      <div id="ai-response-card" class="ai-card hidden">
+        <button class="close-card">✕</button>
+        <h4>AI UX Insights</h4>
+        <div id="ai-content"></div>
+      </div>
+    </main>
+  </div>
+  <script src="../utils/scoring.js"></script>
+  <script src="../utils/suggestions.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
